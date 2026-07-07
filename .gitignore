@@ -4,24 +4,9 @@ __pycache__/
 venv/
 env/
 
-reports/html/*
-reports/allure-results/*
-reports/allure-report/*
-reports/junit/*
-!reports/html/.gitkeep
-!reports/allure-results/.gitkeep
-!reports/allure-report/.gitkeep
-!reports/junit/.gitkeep
-
-screenshots/failures/*
-!screenshots/failures/.gitkeep
-
-logs/*.log
-
-downloads/*
-!downloads/.gitkeep
-uploads/*
-!uploads/.gitkeep
+reports/
+screenshots/
+logs/
 
 .env
 *.env.local
@@ -29,4 +14,3 @@ uploads/*
 .pytest_cache/
 .vscode/
 .idea/
-scratch_explore/

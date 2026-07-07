@@ -2,28 +2,41 @@
 (classic WooCommerce shortcode markup, confirmed on the live site)."""
 from playwright.sync_api import Page
 
-from locators.login_locator import LoginLocators, LostPasswordLocators
 from pages.base_page import BasePage
-from resources.constants import PATH_LOST_PASSWORD, PATH_MY_ACCOUNT
 
 
 class LoginPage(BasePage):
+    PATH = "/my-account/"
+
+    USERNAME_INPUT = "#username"
+    PASSWORD_INPUT = "#password"
+    LOGIN_SUBMIT_BUTTON = "button[name='login']"
+    LOGIN_ERROR_MESSAGE = ".woocommerce-error, .woocommerce-notices-wrapper .woocommerce-error"
+    LOST_PASSWORD_LINK = "a:has-text('Lost your password?')"
+
+    REGISTER_EMAIL_INPUT = "#reg_email"
+    REGISTER_SUBMIT_BUTTON = "button[name='register']"
+    REGISTER_ERROR_MESSAGE = ".woocommerce-error"
+
+    ACCOUNT_LOGGED_IN_NAV = ".woocommerce-MyAccount-navigation"
+    LOGOUT_LINK = ".woocommerce-MyAccount-navigation-link--customer-logout a"
+
     def __init__(self, page: Page):
         super().__init__(page)
-        self.username_input = page.locator(LoginLocators.USERNAME_INPUT)
-        self.password_input = page.locator(LoginLocators.PASSWORD_INPUT)
-        self.login_button = page.locator(LoginLocators.LOGIN_SUBMIT_BUTTON)
-        self.login_error = page.locator(LoginLocators.LOGIN_ERROR_MESSAGE)
+        self.username_input = page.locator(self.USERNAME_INPUT)
+        self.password_input = page.locator(self.PASSWORD_INPUT)
+        self.login_button = page.locator(self.LOGIN_SUBMIT_BUTTON)
+        self.login_error = page.locator(self.LOGIN_ERROR_MESSAGE)
 
-        self.register_email_input = page.locator(LoginLocators.REGISTER_EMAIL_INPUT)
-        self.register_button = page.locator(LoginLocators.REGISTER_SUBMIT_BUTTON)
-        self.register_error = page.locator(LoginLocators.REGISTER_ERROR_MESSAGE)
+        self.register_email_input = page.locator(self.REGISTER_EMAIL_INPUT)
+        self.register_button = page.locator(self.REGISTER_SUBMIT_BUTTON)
+        self.register_error = page.locator(self.REGISTER_ERROR_MESSAGE)
 
-        self.account_nav = page.locator(LoginLocators.ACCOUNT_LOGGED_IN_NAV)
-        self.logout_link = page.locator(LoginLocators.LOGOUT_LINK)
+        self.account_nav = page.locator(self.ACCOUNT_LOGGED_IN_NAV)
+        self.logout_link = page.locator(self.LOGOUT_LINK)
 
     def open(self) -> "LoginPage":
-        self.goto(PATH_MY_ACCOUNT)
+        self.goto(self.PATH)
         return self
 
     def login(self, username: str, password: str) -> None:
@@ -51,19 +64,25 @@ class LoginPage(BasePage):
         self.click(self.logout_link)
 
     def open_lost_password(self) -> "LostPasswordPage":
-        self.click(self.page.locator(LoginLocators.LOST_PASSWORD_LINK))
+        self.click(self.page.locator(self.LOST_PASSWORD_LINK))
         return LostPasswordPage(self.page)
 
 
 class LostPasswordPage(BasePage):
+    PATH = "/my-account/lost-password/"
+
+    USER_LOGIN_INPUT = "#user_login"
+    RESET_SUBMIT_BUTTON = "button:has-text('Reset password')"
+    RESET_NOTICE = ".woocommerce-message, .woocommerce-error"
+
     def __init__(self, page: Page):
         super().__init__(page)
-        self.user_login_input = page.locator(LostPasswordLocators.USER_LOGIN_INPUT)
-        self.reset_button = page.locator(LostPasswordLocators.RESET_SUBMIT_BUTTON)
-        self.notice = page.locator(LostPasswordLocators.RESET_NOTICE)
+        self.user_login_input = page.locator(self.USER_LOGIN_INPUT)
+        self.reset_button = page.locator(self.RESET_SUBMIT_BUTTON)
+        self.notice = page.locator(self.RESET_NOTICE)
 
     def open(self) -> "LostPasswordPage":
-        self.goto(PATH_LOST_PASSWORD)
+        self.goto(self.PATH)
         return self
 
     def request_reset(self, username_or_email: str) -> None:

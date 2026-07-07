@@ -8,28 +8,42 @@ submitting with required fields left blank.
 """
 from playwright.sync_api import Page
 
-from locators.checkout_locator import CheckoutLocators
 from pages.base_page import BasePage
-from resources.constants import PATH_CHECKOUT
 
 
 class CheckoutPage(BasePage):
+    PATH = "/checkout/"
+
+    FORM = "form[name='checkout']"
+    EMPTY_CART_NOTICE = ".wc-empty-cart-message, .cart-empty"
+
+    BILLING_FIRST_NAME = "#billing_first_name"
+    BILLING_LAST_NAME = "#billing_last_name"
+    BILLING_EMAIL = "#billing_email"
+    BILLING_PHONE = "#billing_phone"
+
+    ORDER_REVIEW = "#order_review"
+    PLACE_ORDER_BUTTON = "#place_order"
+
+    VALIDATION_ERROR_NOTICE = ".woocommerce-error, .woocommerce-NoticeGroup"
+    INVALID_FIELD = ".woocommerce-invalid"
+
     def __init__(self, page: Page):
         super().__init__(page)
-        self.form = page.locator(CheckoutLocators.FORM)
-        self.empty_cart_notice = page.locator(CheckoutLocators.EMPTY_CART_NOTICE)
-        self.order_review = page.locator(CheckoutLocators.ORDER_REVIEW)
-        self.place_order_button = page.locator(CheckoutLocators.PLACE_ORDER_BUTTON)
-        self.validation_notice = page.locator(CheckoutLocators.VALIDATION_ERROR_NOTICE)
-        self.invalid_fields = page.locator(CheckoutLocators.INVALID_FIELD)
+        self.form = page.locator(self.FORM)
+        self.empty_cart_notice = page.locator(self.EMPTY_CART_NOTICE)
+        self.order_review = page.locator(self.ORDER_REVIEW)
+        self.place_order_button = page.locator(self.PLACE_ORDER_BUTTON)
+        self.validation_notice = page.locator(self.VALIDATION_ERROR_NOTICE)
+        self.invalid_fields = page.locator(self.INVALID_FIELD)
 
-        self.first_name_input = page.locator(CheckoutLocators.BILLING_FIRST_NAME)
-        self.last_name_input = page.locator(CheckoutLocators.BILLING_LAST_NAME)
-        self.email_input = page.locator(CheckoutLocators.BILLING_EMAIL)
-        self.phone_input = page.locator(CheckoutLocators.BILLING_PHONE)
+        self.first_name_input = page.locator(self.BILLING_FIRST_NAME)
+        self.last_name_input = page.locator(self.BILLING_LAST_NAME)
+        self.email_input = page.locator(self.BILLING_EMAIL)
+        self.phone_input = page.locator(self.BILLING_PHONE)
 
     def open(self) -> "CheckoutPage":
-        self.goto(PATH_CHECKOUT)
+        self.goto(self.PATH)
         return self
 
     def is_empty_cart_notice_visible(self) -> bool:

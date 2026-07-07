@@ -6,7 +6,7 @@ test file gets `page` for free without its own import.
 import pytest
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 
-from resources.test_config import CONFIG
+from config.config import CONFIG
 
 
 @pytest.fixture(scope="session")

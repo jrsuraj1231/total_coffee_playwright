@@ -9,19 +9,22 @@ from urllib.parse import quote_plus
 from playwright.sync_api import Page
 
 from components.header import Header
-from locators.product_locator import ProductGridLocators
-from locators.search_locator import SearchLocators
 from pages.base_page import BasePage
 
 
 class SearchPage(BasePage):
+    RESULTS_HEADING = "h1.woocommerce-products-header__title, h1.page-title"
+    PRODUCT_LIST_ITEM = "ul.products li.product"
+    PRODUCT_LINK = "li.product a.woocommerce-LoopProduct-link"
+    NO_RESULTS_MESSAGE = ".woocommerce-info, p.no-products-found"
+
     def __init__(self, page: Page):
         super().__init__(page)
         self.header = Header(page)
-        self.results_heading = page.locator(SearchLocators.RESULTS_HEADING)
-        self.product_items = page.locator(ProductGridLocators.PRODUCT_LIST_ITEM)
-        self.product_links = page.locator(ProductGridLocators.PRODUCT_LINK)
-        self.no_results_message = page.locator(ProductGridLocators.NO_RESULTS_MESSAGE)
+        self.results_heading = page.locator(self.RESULTS_HEADING)
+        self.product_items = page.locator(self.PRODUCT_LIST_ITEM)
+        self.product_links = page.locator(self.PRODUCT_LINK)
+        self.no_results_message = page.locator(self.NO_RESULTS_MESSAGE)
 
     def search_via_url(self, term: str) -> "SearchPage":
         self.goto(f"/?s={quote_plus(term)}&post_type=product")

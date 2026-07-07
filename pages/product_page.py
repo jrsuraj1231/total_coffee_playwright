@@ -1,21 +1,28 @@
 """Page Object for the product detail page (PDP)."""
 from playwright.sync_api import Page
 
-from locators.product_locator import ProductLocators
 from pages.base_page import BasePage
 from utilities.common_utils import extract_price_to_float
 
 
 class ProductPage(BasePage):
+    TITLE = "h1.product_title"
+    PRICE = "p.price, span.price"
+    QUANTITY_INPUT = "input[name='quantity']"
+    ADD_TO_CART_BUTTON = "button.single_add_to_cart_button"
+    BREADCRUMB = ".woocommerce-breadcrumb"
+    STOCK_STATUS = "p.stock"
+    ADDED_TO_CART_MESSAGE = ".woocommerce-message"
+
     def __init__(self, page: Page):
         super().__init__(page)
-        self.title = page.locator(ProductLocators.TITLE)
-        self.price = page.locator(ProductLocators.PRICE).first
-        self.quantity_input = page.locator(ProductLocators.QUANTITY_INPUT)
-        self.add_to_cart_button = page.locator(ProductLocators.ADD_TO_CART_BUTTON)
-        self.breadcrumb = page.locator(ProductLocators.BREADCRUMB)
-        self.stock_status = page.locator(ProductLocators.STOCK_STATUS)
-        self.added_to_cart_message = page.locator(ProductLocators.ADDED_TO_CART_MESSAGE)
+        self.title = page.locator(self.TITLE)
+        self.price = page.locator(self.PRICE).first
+        self.quantity_input = page.locator(self.QUANTITY_INPUT)
+        self.add_to_cart_button = page.locator(self.ADD_TO_CART_BUTTON)
+        self.breadcrumb = page.locator(self.BREADCRUMB)
+        self.stock_status = page.locator(self.STOCK_STATUS)
+        self.added_to_cart_message = page.locator(self.ADDED_TO_CART_MESSAGE)
 
     def open(self, product_path: str) -> "ProductPage":
         self.goto(product_path)

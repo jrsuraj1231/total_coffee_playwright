@@ -2,7 +2,7 @@
 import pytest
 
 from api.api_client import ApiClient
-from resources.test_config import CONFIG
+from config.config import CONFIG
 
 
 @pytest.fixture

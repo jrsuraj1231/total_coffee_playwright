@@ -6,7 +6,6 @@ import pytest
 pytest_plugins = [
     "fixtures.browser_fixture",
     "fixtures.api_fixture",
-    "fixtures.db_fixture",
 ]
 
 

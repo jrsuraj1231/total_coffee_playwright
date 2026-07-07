@@ -10,10 +10,10 @@ are supplied.
 """
 import pytest
 
+from config.config import CONFIG
 from pages.dashboard_page import DashboardPage
 from pages.login_page import LoginPage, LostPasswordPage
 from pages.product_page import ProductPage
-from resources.test_config import CONFIG
 from utilities.excel_reader import read_excel
 from utilities.json_reader import read_json
 

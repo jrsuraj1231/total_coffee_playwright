@@ -2,7 +2,7 @@
 from playwright.sync_api import Locator, Page
 
 from components.popup import Popup
-from resources.test_config import CONFIG
+from config.config import CONFIG
 from utilities.logger import get_logger
 
 logger = get_logger(__name__)

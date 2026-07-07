@@ -7,8 +7,3 @@ pytest-rerunfailures==14.0
 allure-pytest==2.13.5
 openpyxl==3.1.5
 PyYAML==6.0.2
-python-dotenv==1.0.1
-Faker==30.8.2
-cryptography==43.0.3
-requests==2.32.3
-SQLAlchemy==2.0.36

@@ -14,21 +14,21 @@ registration, or creates real spam data. See "Safety model" below.
 
 ```
 config/       environment JSON (dev/qa/stage/prod) + config.py loader
-resources/    constants, environment helpers, marker names
-pages/        Page Objects (one per page/flow) built on pages/base_page.py
-components/   reusable page fragments (header, footer, popups, dialogs)
-locators/     centralized CSS/selector constants per page
-utilities/    excel/json/csv/yaml readers, logger, screenshots, waits, assertions,
-              encryption, random data, misc helpers
-fixtures/     pytest fixtures: browser/page, API client, optional DB session
+pages/        Page Objects (one per page/flow), locators live as class
+              constants on each page, built on pages/base_page.py
+components/   reusable page fragments used across pages (header, popup)
+utilities/    excel/json/csv/yaml readers, logger, screenshots, misc helpers
+fixtures/     pytest fixtures: browser/page, API client
 api/          WooCommerce Store API client (wc/store/v1)
-database/     optional DB-validation scaffolding (unused by default - see below)
 testdata/     excel (primary)/json/csv/yaml data-driven inputs
 tests/
   smoke/        fast, high-value checks
   regression/   full functional depth
   api/          Store API tests (no browser)
 ```
+
+`reports/`, `screenshots/`, and `logs/` are created automatically the
+first time you run the suite and are git-ignored.
 
 ## Setup
 
@@ -85,10 +85,6 @@ framework never creates one for you.
 - **Cart mutations are safe**: adding/updating/removing cart line items
   only touches the anonymous session's cart (confirmed via the public
   `wc/store/v1/cart` API) - no inventory or order side effects.
-- **`database/`** is scaffolded for framework completeness but unused by
-  the shipped tests: this project has no real database credentials for a
-  third-party hosted store. Point `DB_CONNECTION_STRING` at your own DB
-  to use it against an internal environment.
 
 ## Data-driven testing
 
@@ -100,5 +96,3 @@ category navigation) so the framework demonstrates all four formats.
 ## CI/CD
 
 `.github/workflows/regression.yml` runs the suite on push/PR/schedule.
-`Dockerfile` + `docker-compose.yml` containerize it; `Jenkinsfile` gives
-an equivalent Jenkins pipeline.

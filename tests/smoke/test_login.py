@@ -5,8 +5,8 @@ field-validation (empty username/password) sourced from testdata/excel/login.xls
 """
 import pytest
 
+from config.config import CONFIG
 from pages.login_page import LoginPage
-from resources.test_config import CONFIG
 from utilities.excel_reader import read_excel
 
 LOGIN_CASES = read_excel("login.xlsx")
