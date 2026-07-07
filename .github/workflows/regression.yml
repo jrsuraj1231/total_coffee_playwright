@@ -1,0 +1,48 @@
+name: Regression Suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [smoke, regression, api]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+
+      - name: Run ${{ matrix.suite }} tests
+        env:
+          ENV: qa
+          HEADLESS: "true"
+        run: pytest -m ${{ matrix.suite }} --alluredir=reports/allure-results
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ matrix.suite }}
+          path: |
+            reports/html
+            reports/junit
+            reports/allure-results
+            screenshots/failures
+            logs

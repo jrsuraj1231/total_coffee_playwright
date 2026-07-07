@@ -1,0 +1,8 @@
+{
+  "invalid_registration_emails": [
+    { "email": "plainaddress", "reason": "missing @ and domain" },
+    { "email": "missing-at-sign.com", "reason": "missing @" },
+    { "email": "user@@example.com", "reason": "double @" }
+  ],
+  "note": "These are used only to assert client-side email-format validation on the my-account register form. No registration is ever actually submitted with these or any other values against the live total.coffee store."
+}

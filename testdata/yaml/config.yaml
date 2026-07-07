@@ -1,0 +1,13 @@
+# Category navigation data used by test_search.py::test_category_navigation_from_header_menu
+categories:
+  - link_text: "Roasted Coffees"
+    url_fragment: "product-category/roastedcoffees"
+  - link_text: "Equipment"
+    url_fragment: "product-category/equipment"
+  - link_text: "Green Coffees"
+    url_fragment: "product-category/greenbeans"
+
+# Sanity values used to cross-check config/config.py at runtime
+environment_defaults:
+  currency_symbol: "₹"
+  default_country: "IN"

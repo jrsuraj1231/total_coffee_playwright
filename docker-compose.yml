@@ -1,0 +1,13 @@
+services:
+  tests:
+    build: .
+    environment:
+      - ENV=qa
+      - HEADLESS=true
+      - TEST_USERNAME=${TEST_USERNAME:-}
+      - TEST_PASSWORD=${TEST_PASSWORD:-}
+    volumes:
+      - ./reports:/app/reports
+      - ./screenshots:/app/screenshots
+      - ./logs:/app/logs
+    command: ["pytest", "-m", "smoke"]

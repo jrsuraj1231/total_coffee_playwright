@@ -1,0 +1,16 @@
+{
+  "valid_terms": [
+    { "term": "coffee", "expect_results": true },
+    { "term": "grinder", "expect_results": true },
+    { "term": "kettle", "expect_results": true },
+    { "term": "AEROPRESS", "expect_results": true }
+  ],
+  "invalid_terms": [
+    { "term": "zzzznonexistentproductxyz123", "expect_results": false },
+    { "term": "qwertyuiopasdfghjkl999", "expect_results": false }
+  ],
+  "edge_case_terms": [
+    { "term": "", "description": "empty search should return the default shop listing, not an error" },
+    { "term": "   ", "description": "whitespace-only search" }
+  ]
+}
