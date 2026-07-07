@@ -13,7 +13,7 @@ registration, or creates real spam data. See "Safety model" below.
 ## Structure
 
 ```
-config/       environment JSON (dev/qa/stage/prod) + config.py loader
+config/       environment YAML (dev/qa/stage/prod) + config.py loader
 pages/        Page Objects (one per page/flow), locators live as class
               constants on each page, built on pages/base_page.py
 components/   reusable page fragments used across pages (header, popup)
@@ -62,11 +62,11 @@ to `logs/automation.log` / `logs/error.log`.
 
 ## Configuration
 
-`ENV` selects `config/config_<env>.json` (dev/qa/stage/prod). Because
+`ENV` selects `config/config_<env>.yaml` (dev/qa/stage/prod). Because
 total.coffee is a single public production site, all four files point at
 the same `base_url` today - the per-environment structure is kept so the
 pattern is ready to point at real internal environments by editing the
-relevant JSON file. Override individual values with env vars: `BASE_URL`,
+relevant YAML file. Override individual values with env vars: `BASE_URL`,
 `BROWSER`, `HEADLESS`, `TEST_USERNAME`, `TEST_PASSWORD`.
 
 A handful of tests (my-account dashboard navigation, valid-login smoke

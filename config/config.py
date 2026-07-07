@@ -6,30 +6,31 @@ Usage:
 
 Environment is selected via the ``ENV`` environment variable
 (dev|qa|stage|prod), defaulting to ``qa``. Individual values can be
-overridden without touching the JSON files via environment variables:
+overridden without touching the YAML files via environment variables:
 ``BASE_URL``, ``HEADLESS``, ``BROWSER``.
 
 Note: total.coffee is a single public production store, so all four
-environment JSON files currently point at the same base_url. The
+environment YAML files currently point at the same base_url. The
 per-environment structure is kept so the framework demonstrates the
 standard pattern and can be pointed at real dev/qa/stage hosts by
-editing the relevant config_<env>.json file.
+editing the relevant config_<env>.yaml file.
 """
-import json
 import os
 from pathlib import Path
 from typing import Any, Dict
+
+import yaml
 
 CONFIG_DIR = Path(__file__).resolve().parent
 VALID_ENVS = ("dev", "qa", "stage", "prod")
 
 
 def _load_env_file(env: str) -> Dict[str, Any]:
-    config_path = CONFIG_DIR / f"config_{env}.json"
+    config_path = CONFIG_DIR / f"config_{env}.yaml"
     if not config_path.exists():
         raise FileNotFoundError(f"No config file found for environment '{env}' at {config_path}")
     with open(config_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return yaml.safe_load(f)
 
 
 def _apply_env_overrides(data: Dict[str, Any]) -> Dict[str, Any]:
@@ -54,7 +55,7 @@ def _apply_env_overrides(data: Dict[str, Any]) -> Dict[str, Any]:
 
 
 class Config:
-    """Thin attribute-style wrapper around the active environment's JSON config."""
+    """Thin attribute-style wrapper around the active environment's YAML config."""
 
     def __init__(self, env: str | None = None):
         self.env = (env or os.getenv("ENV", "qa")).strip().lower()
